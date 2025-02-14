@@ -1,0 +1,38 @@
+version: "3.8" 
+services:
+  mongo:
+    image: mongo
+    container_name: mongo_c
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"  
+
+  api:
+    build: ./api
+    container_name: api_c
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    volumes: 
+      - ./api:/app
+      - /app/node_modules  # Fix typo: `node_module` → `node_modules`
+    environment: 
+      - MONGO_URI=mongodb+srv://nidhisinha2602:nidhisinha2602@cluster0.aswyx.mongodb.net/blogging?retryWrites=true&w=majority
+  client:
+   build: ./client
+   container_name: client_c
+   ports:
+      - "5173:5173"
+   stdin_open: true
+   tty: true
+   depends_on:
+      - api
+   volumes:
+      - ./client:/client
+      - /client/node_modules    
+   extra_hosts:
+      - "localhost:host-gateway"  # 👈 Makes localhost work inside Docker  
+volumes:
+  mongo-data:
