@@ -32,6 +32,9 @@ jobs:
       steps:
          - name: Checkout Repository
            uses: actions/checkout@v4
+          
+         - name: Set up Docker Compose
+           run: sudo apt-get update && sudo apt-get install -y docker-compose
 
          - name: Log into Docker Hub
            uses: docker/login-action@v3
@@ -40,7 +43,7 @@ jobs:
               password: ${{ secrets.DOCKER_PASSWORD }}  
          - name: Build and Push Docker Images
            run: |
-              docker-compose up
+              docker-compose build
               docker tag blog_api:latest ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
               docker tag blog_client:latest ${{ secrets.DOCKER_USERNAME }}/blog-client:latest
               docker push ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
