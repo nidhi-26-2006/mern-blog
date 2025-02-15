@@ -41,11 +41,14 @@ jobs:
            with:
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}  
-         - name: Build and Push Docker Images
+         - name: Build API & Client Images
            run: |
-              docker-compose build
-              docker tag blog_api:latest ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
-              docker tag blog_client:latest ${{ secrets.DOCKER_USERNAME }}/blog-client:latest
-              docker push ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
-              docker push ${{ secrets.DOCKER_USERNAME }}/blog-client:latest 
-     
+                docker build -t blog-api:latest ./api
+                docker build -t blog-client:latest ./client
+      
+         - name: Tag and Push Docker Images
+           run: |
+                docker tag blog-api:latest ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
+                docker tag blog-client:latest ${{ secrets.DOCKER_USERNAME }}/blog-client:latest
+                docker push ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
+                docker push ${{ secrets.DOCKER_USERNAME }}/blog-client:latest
