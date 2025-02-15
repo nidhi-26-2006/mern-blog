@@ -44,5 +44,5 @@ jobs:
               docker tag blog_api:latest ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
               docker tag blog_client:latest ${{ secrets.DOCKER_USERNAME }}/blog-client:latest
               docker push ${{ secrets.DOCKER_USERNAME }}/blog-api:latest
-              docker push ${{ secrets.DOCKER_USERNAME }}/blog-client:latest
+              docker push ${{ secrets.DOCKER_USERNAME }}/blog-client:latest 
      
