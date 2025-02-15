@@ -17,7 +17,7 @@ services:
       - mongo
     volumes: 
       - ./api:/app
-      - /app/node_modules  # Fix typo: `node_module` → `node_modules`
+      - /app/node_modules  
     environment: 
       - MONGO_URI=mongodb+srv://nidhisinha2602:nidhisinha2602@cluster0.aswyx.mongodb.net/blogging?retryWrites=true&w=majority
   client:
